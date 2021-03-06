@@ -14,6 +14,18 @@
     border: 2px solid black; 
     cursor: pointer; 
 }
+.screen{
+    display: none; 
+}
+.screen.active{
+    display: block;
+    margin: auto; 
+    text-align: center;
+    border: 2px solid black; 
+    background: black;
+    height: 100%;
+    padding: 10% 0; 
+}
 #mainMenu{
     margin: auto; 
     text-align: center;
@@ -24,6 +36,9 @@
 }
 .mainTitle{
     color: white;
+}
+#aboutInfo{
+    color: white; 
 }
 #buttonList{
     margin: auto;

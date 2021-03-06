@@ -1,9 +1,10 @@
 <html lang='en-US'>
 <head>
-    <title>Moonlander Extraordinair!</title>
+    <title>Moon Lander Extraordinair!</title>
     <link rel='stylesheet'href='style.css'></link> 
 </head>
 <body>
+    <!--Main Menu-->
     <div class='screen' id='mainMenu'>
         <h1 class='mainTitle'>Moon Lander Extraordinair!</h1>
         <div id='buttonList'>
@@ -13,6 +14,24 @@
             <button class='button' id='controlsButton'>Set&nbsp;Controls</button>
         </div>
     </div>
-    
+    <!--About Page-->
+    <div class='screen' id='about'>
+        <h1 class='mainTitle'>About The Game</h1>
+        <p id='aboutInfo'>This game was created by Jace Longhurst in March of 2021 <br> for Dean Mathias's CS5410 class.</p>
+        <button class='button' id='aboutBackButton'>Back</button>
+    </div>
+    <!--High Scores-->
+    <!--Controls page-->
+    <!-- Scripts-->
+    <script>myGame = {
+        screens: {},
+        scores: {},
+        controls: {}
+    }</script>
+    <script src='about.js'></script>
+    <script src='mainMenu.js'></script>
+    <script src= 'menuer.js'></script>
+    <script src='main.js'></script>
+
 </body>
 </html>
