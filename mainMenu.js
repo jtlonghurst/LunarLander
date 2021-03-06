@@ -10,7 +10,9 @@ myGame.screens['mainMenu'] = function(){
 
     function initialize(){
         document.getElementById('aboutButton').addEventListener('click',function (){ menu.showScreen('about');});
+        document.getElementById('highScoreButton').addEventListener('click', function(){menu.showScreen('highScore');});
         console.log('Main Menu Initialized');
+
 
     }
     function run(){

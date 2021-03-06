@@ -10,17 +10,22 @@
         <div id='buttonList'>
             <button class='button' id='newGameButton'>New&nbsp;Game</button>
             <button class='button' id='aboutButton'>About</button> 
-            <button class='button' id='HighScoreButton'>High&nbsp;Score</button>
+            <button class='button' id='highScoreButton'>High&nbsp;Score</button>
             <button class='button' id='controlsButton'>Set&nbsp;Controls</button>
         </div>
     </div>
     <!--About Page-->
     <div class='screen' id='about'>
         <h1 class='mainTitle'>About The Game</h1>
-        <p id='aboutInfo'>This game was created by Jace Longhurst in March of 2021 <br> for Dean Mathias's CS5410 class.</p>
+        <p class='normalText' id='aboutInfo'>This game was created by Jace Longhurst in March of 2021 <br> for Dean Mathias's CS5410 class.</p>
         <button class='button' id='aboutBackButton'>Back</button>
     </div>
     <!--High Scores-->
+    <div class = 'screen' id='highScore'>
+        <h1 class ='mainTitle'>High Scores</h1>
+        <p class='normalText'>Nothing to see here for now come back later.</p>
+        <button class="button" id='highScoreBackButton'>Back</button>
+    </div>
     <!--Controls page-->
     <!-- Scripts-->
     <script>myGame = {
@@ -28,6 +33,7 @@
         scores: {},
         controls: {}
     }</script>
+    <script src ='highScore.js'></script>
     <script src='about.js'></script>
     <script src='mainMenu.js'></script>
     <script src= 'menuer.js'></script>
