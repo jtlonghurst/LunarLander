@@ -10,6 +10,8 @@ myGame.screens['gamePlay']= function(){
     function run(){
 
     }
+
+    
     return {
         initialize: initialize,
         run: run,
