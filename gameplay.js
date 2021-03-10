@@ -23,6 +23,8 @@ myGame.screens['newGame']= function(){
     }
     function render(){
        // console.log('render checking in')
+       Draw.clear(spec.game.size);
+       Draw.drawLine([]);
 
     }
 
