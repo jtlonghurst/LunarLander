@@ -10,7 +10,8 @@ myGame.screens['newGame']= function(){
     }
     function run(){
         previousTimeStamp = performance.now();
-        spec.game.looping = true; 
+        spec.game.looping = true;
+        creator.spikyLine(spec.landscape.startPathX,spec.landscape.endPathX,4);
         requestAnimationFrame(gameLoop)
     }
 
@@ -24,7 +25,8 @@ myGame.screens['newGame']= function(){
     function render(){
        // console.log('render checking in')
        Draw.clear(spec.game.size);
-       Draw.drawLine([]);
+      // console.log(spec.landscape.landLine);
+       Draw.drawLine(spec.landscape.landLine);
 
     }
 
