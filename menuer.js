@@ -1,7 +1,7 @@
-let menuer = function(){
+let menuer = function(screens){
 
 
-function initialize(screens){
+function initialize(){
     //Screens is a list of all the different screens that have been added. 
     for (screen in screens){
         if(screens.hasOwnProperty(screen)){
@@ -23,9 +23,13 @@ function showScreen(id){
         active[i].classList.remove('active');
     }
     console.log(id + ' is being called in show screen');
+    console.log('screens problem')
+    console.log(screens[id])
+    screens[id]().run();
+    
     document.getElementById(id).classList.add('active');
-    console.log(document.getElementById(id).classList);
-    console.log(document.getElementById('mainMenu').classList);
+    //console.log(document.getElementById(id).classList);
+    //console.log(document.getElementById('mainMenu').classList);
 
 }
 
@@ -34,4 +38,4 @@ return {
     showScreen: showScreen
 }
 
-};
+}(myGame.screens);

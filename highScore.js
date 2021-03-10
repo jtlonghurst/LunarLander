@@ -6,7 +6,7 @@ For now there is not much to see.
 myGame.screens['highScore']= function(){
 
     function initialize(){
-        document.getElementById('highScoreBackButton').addEventListener('click', function(){menu.showScreen('mainMenu');});
+        document.getElementById('highScoreBackButton').addEventListener('click', function(){menuer.showScreen('mainMenu');});
 
     }
 

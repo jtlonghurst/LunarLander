@@ -8,7 +8,7 @@ d is rotate right
 */
 myGame.screens['setControls'] = function(){
     function initialize(){
-        document.getElementById('setControlsBackButton').addEventListener('click', function(){menu.showScreen('mainMenu');});
+        document.getElementById('setControlsBackButton').addEventListener('click', function(){menuer.showScreen('mainMenu');});
 
     }
     function run(){

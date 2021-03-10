@@ -1,7 +1,7 @@
 myGame.screens['about'] = function(){
     function initialize(){
         console.log('about is being initted')
-        document.getElementById('aboutBackButton').addEventListener('click', function(){menu.showScreen('mainMenu')})
+        document.getElementById('aboutBackButton').addEventListener('click', function(){menuer.showScreen('mainMenu')})
     }
 
     function run(){

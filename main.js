@@ -1,5 +1,6 @@
 
 
 console.log('The script is working')
-let menu = menuer();
-menu.initialize(myGame.screens);
+//let menu = menuer();
+let spec = specs();
+menuer.initialize();
