@@ -9,6 +9,7 @@ and change the controls
 myGame.screens['mainMenu'] = function(){
 
     function initialize(){
+        document.getElementById('newGameButton').addEventListener('click', function(){menu.showScreen('newGame');});
         document.getElementById('aboutButton').addEventListener('click',function (){ menu.showScreen('about');});
         document.getElementById('highScoreButton').addEventListener('click', function(){menu.showScreen('highScore');});
         document.getElementById('controlsButton').addEventListener('click', function(){menu.showScreen('setControls');});
