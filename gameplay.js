@@ -11,7 +11,8 @@ myGame.screens['newGame']= function(){
     function run(){
         previousTimeStamp = performance.now();
         spec.game.looping = true;
-        creator.spikyLine(spec.landscape.startPathX,spec.landscape.endPathX,4);
+        creator.levelOne();
+       // creator.spikyLine(spec.landscape.startPathX,spec.landscape.endPathX,4);
         requestAnimationFrame(gameLoop)
     }
 
