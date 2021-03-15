@@ -40,6 +40,35 @@ creator = function(){
         
     }
 
+    //the purpose of this is to allow the safe zones to be sorted in the list so they don't come out in the wrong order 
+    function insertionSort(insert, location, index = null){
+        let placed = false; 
+        for (let i = 0; i < location.length; i++){
+            //This makes it reusable. 
+            //I'm going to use it to sort arrays 
+            if(index != null){
+                if(insert[index] < location[i][index] ){
+                    location.splice(i,0,insert);
+                    placed = true; 
+                    break;
+                }
+            }
+            //this is if it isn't an array
+            else{
+                if(insert < location[i]){
+                    location.splice(i, 0, insert);
+                    placed = true; 
+                    break; 
+                }
+            }
+
+        }
+        if(!placed){
+            location.splice(location.length, 0, insert);
+        }
+
+    }
+
     function selectSafeZones(numSafeSpots, lengthSafeSpots){
         //setting up the boundaries 
             let maxSafeNum = spec.landscape.endPathX - spec.landscape.landingBorder;
@@ -49,15 +78,50 @@ creator = function(){
             let marginSize = spec.landscape.maxHeight - spec.landscape.minHeight; //this governs the ys 
         //selecting the random numbers
         for (let i = 0; i < numSafeSpots; i++){
-            let selection = Math.floor(Math.random() * difference) + minSafeNum;
+            
             let y = Math.floor(Math.random()*marginSize) + spec.landscape.minHeight;
+            //nothing in the safeList yet
             if(spec.landscape.safeList.length == 0){
-                spec.landscape.safeList.concat([[selection,y]]);
+                let selection = Math.floor(Math.random() * difference) + minSafeNum;
+                spec.landscape.safeList = spec.landscape.safeList.concat([[selection,y]]);
             }
-            for (let j = 0; j < spec.landscape.safeList.length; j++){
-                
+            //The safeList has things in it, we need to make sure that we don't pick something that has already been picked. 
+            else{
+                let doAgain = false; 
+                do{
+                    doAgain = false; 
+                    let size = spec.landscape.safeList.length;
+                    let selection = Math.floor(Math.random() * (size+1));
+                    let current = minSafeNum;
+                    let location = 0; 
+                        for (let i = 0; i < size + 1; i++){
+                            if  (selection === i){
+                                //if it is the last one make the last location the last spot
+                                if (i === size){
+                                    location = maxSafeNum;
+                                }
+                                else{
+                                    location = spec.landscape.safeList[i][0];
+                                }
+                                //checking to make sure the area selected is big enough 
+                                if((location - current) > lengthSafeSpots){
+                                    selection = Math.floor(Math.random() * ((location-lengthSafeSpots) - current))+ current; 
+                                    //spec.landscape.safeList = spec.landscape.safeList.concat([[selection,y]]);
+                                    insertionSort([selection, y], spec.landscape.safeList, 0);
+                                }
+                                else{
+                                    doAgain = true; 
+                                }
+                                break; 
+                            }
+ 
+                            else{
+                                current = spec.landscape.safeList[i][0] + spec.landscape.lengthSafeSpots;
+                            }
+                        }
+                }while(doAgain);
             }
-            spec.landscape.safeList = spec.landscape.safeList.concat([[selection, y]]); 
+            //spec.landscape.safeList = spec.landscape.safeList.concat([[selection, y]]); 
         }
         console.log('safeZones: ');
         console.log(spec.landscape.safeList);
@@ -95,7 +159,7 @@ creator = function(){
     } 
 
     function levelOne(){
-        makeLevel(2, 2, 100);
+        makeLevel(3, 2, 150);
     }
     return{
         spikyLine: spikyLine,

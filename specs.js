@@ -9,7 +9,7 @@ specs = function(){
         startPathX: 0,
         endPathX:999,
         maxHeight: 999,
-        minHeight: 0,//These will help determine the highest peak and the lowestValley
+        minHeight: 400,//These will help determine the highest peak and the lowestValley
         landLine: [], 
         strokeStyle: 'rgb(85, 243, 243)',
         fillStyle : 'rgb(85,243,243)',
