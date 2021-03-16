@@ -21,6 +21,7 @@ myGame.screens['newGame']= function(){
     }
     function update(){
         //console.log('Update Checking in')
+        updater.updateLander();
 
     }
     function render(){
@@ -28,6 +29,7 @@ myGame.screens['newGame']= function(){
        Draw.clear(spec.game.size);
       // console.log(spec.landscape.landLine);
        Draw.drawLine(spec.landscape.landLine);
+       Draw.drawLander();
 
     }
 

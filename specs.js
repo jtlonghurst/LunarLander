@@ -22,9 +22,21 @@ specs = function(){
         safeList : [] 
 
     }
+    //lander = {}
     lander = {
-
+        x:200,
+        y:200,
+        width: 75,
+        height: 75, 
+        src:'images/lander.png'
     }
+
+    lander.ready = false;
+    lander.image = new Image();
+    lander.image.onload = function() {
+        lander.ready = true; 
+    }
+    lander.image.src = lander.src; 
     return{
         game,
         landscape,

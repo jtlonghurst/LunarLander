@@ -41,6 +41,15 @@ creator = function(){
     }
 
     //the purpose of this is to allow the safe zones to be sorted in the list so they don't come out in the wrong order 
+    
+    /**
+     * Given and object and a location, insertionSort will put the item insert in the correct position.
+     * index is used in case the objects are arrays that you are sorting by a certain element. 
+     * 
+     * @param {object} insert an object to put into an array
+     * @param {array} location an array in which to sort into
+     * @param {int} index if object is an array this is the object in insert we are sorting by
+     */
     function insertionSort(insert, location, index = null){
         let placed = false; 
         for (let i = 0; i < location.length; i++){
@@ -68,9 +77,14 @@ creator = function(){
         }
 
     }
-
+/**
+ * selectSafeZones will select the number of safe spots and how long they should be. 
+ * This function will sort them in the correct order and make sure that they don't overlap.
+ * @param {int} numSafeSpots 
+ * @param {int} lengthSafeSpots 
+ */
     function selectSafeZones(numSafeSpots, lengthSafeSpots){
-        //setting up the boundaries 
+        //setting up the boundaries as far as x and height generally 
             let maxSafeNum = spec.landscape.endPathX - spec.landscape.landingBorder;
             maxSafeNum = maxSafeNum - lengthSafeSpots;
             let minSafeNum  = spec.landscape.startPathX + spec.landscape.landingBorder;
@@ -89,6 +103,7 @@ creator = function(){
             else{
                 let doAgain = false; 
                 do{
+                   // console.log('Am I stuck in an endless loop???')
                     doAgain = false; 
                     let size = spec.landscape.safeList.length;
                     let selection = Math.floor(Math.random() * (size+1));
@@ -110,21 +125,41 @@ creator = function(){
                                     insertionSort([selection, y], spec.landscape.safeList, 0);
                                 }
                                 else{
+                                   /* console.log('doAgain is true');
+                                    console.log(selection);
+                                    console.log('location - current');
+                                    console.log(location - current);
+                                    console.log('size');
+                                    console.log(size);
+                                    console.log('location');
+                                    console.log(location);
+                                    console.log('current');
+                                    console.log(current);*/
                                     doAgain = true; 
                                 }
                                 break; 
                             }
  
                             else{
-                                current = spec.landscape.safeList[i][0] + spec.landscape.lengthSafeSpots;
+                                current = spec.landscape.safeList[i][0] + lengthSafeSpots;
+                                if(isNaN(current)){
+                                   /* console.log('nan check');
+                                    console.log('size');
+                                    console.log(size);
+                                    console.log('safe list');
+                                    console.log(spec.landscape.safeList[i][0]);
+                                    console.log('length safe spots');
+                                    console.log(lengthSafeSpots);*/
+                                    console.log('ERROR CURRENT IS NAN!!!!!!!!!!!!!!!!!!!!!!!')
+                                }
                             }
                         }
                 }while(doAgain);
             }
             //spec.landscape.safeList = spec.landscape.safeList.concat([[selection, y]]); 
         }
-        console.log('safeZones: ');
-        console.log(spec.landscape.safeList);
+        //console.log('safeZones: ');
+        //console.log(spec.landscape.safeList);
     }
 
     function makeLevel(spikiness, numSafeSpots, lengthSafeSpots){
@@ -140,16 +175,16 @@ creator = function(){
             //Jagged line to safe spot
             let jagged = spikyLine(current, spec.landscape.safeList[i][0],spikiness); 
             spec.landscape.landLine = spec.landscape.landLine.concat(jagged);//spikyLine(current, spec.landscape.safeList[i][0],spikiness));
-            console.log('jagged ' + i);
-            console.log(jagged)
+           // console.log('jagged ' + i);
+            //console.log(jagged)
 
             //Making the safe spot
             spec.landscape.landLine = spec.landscape.landLine.concat([spec.landscape.safeList[i]]);
-            console.log('safe Spot '+ i);
-            console.log(spec.landscape.safeList[i])
+           // console.log('safe Spot '+ i);
+            //console.log(spec.landscape.safeList[i])
             spec.landscape.landLine = spec.landscape.landLine.concat([[spec.landscape.safeList[i][0]+ lengthSafeSpots, spec.landscape.safeList[i][1]]]);
-            console.log('end Safe Spot '+ i);
-            console.log([spec.landscape.safeList[i][0] + lengthSafeSpots, spec.landscape.safeList[i][1]]);
+            //console.log('end Safe Spot '+ i);
+            //console.log([spec.landscape.safeList[i][0] + lengthSafeSpots, spec.landscape.safeList[i][1]]);
 
             //setting up for the next round 
             current = spec.landscape.safeList[i][0]+lengthSafeSpots;

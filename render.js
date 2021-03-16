@@ -33,8 +33,24 @@ Draw = function(){
         context.stroke();
         context.fill();
     }
+
+    /**
+     * Does what it says 
+     */
+    function drawLander(){
+        if(spec.lander.ready){
+            context.drawImage(
+                spec.lander.image,
+                spec.lander.cornerX,
+                spec.lander.cornerY,
+                spec.lander.width,
+                spec.lander.height
+                );
+        }
+    }
     return{
         drawLine: drawLine,
-        clear: clear
+        clear: clear,
+        drawLander: drawLander
     }
 }();
