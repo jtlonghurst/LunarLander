@@ -39,6 +39,12 @@ Draw = function(){
      */
     function drawLander(){
         if(spec.lander.ready){
+            context.save();
+            
+            context.translate(spec.lander.x, spec.lander.y);
+            context.rotate(spec.lander.rotation);
+            context.translate(-spec.lander.x, -spec.lander.y);
+
             context.drawImage(
                 spec.lander.image,
                 spec.lander.cornerX,
@@ -46,6 +52,7 @@ Draw = function(){
                 spec.lander.width,
                 spec.lander.height
                 );
+            context.restore();
         }
     }
     return{

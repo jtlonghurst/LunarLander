@@ -28,8 +28,34 @@ specs = function(){
         y:200,
         width: 75,
         height: 75, 
-        src:'images/lander.png'
+        src:'images/lander.png',
+        rotateRate: Math.PI,
+        rotation: (Math.PI/2),
+        vector:{magnitude:0,direction:0}
     }
+
+    landerInput = function() {
+        function thrust(){
+            updater.addVectors(lander.vector, {magnitude: 2, direction: lander.rotation})
+           // console.log('boom')
+        }
+        function rotateRight(elapsedTime){
+            lander.rotation -= lander.rotateRate * (elapsedTime/1000);  
+           // console.log('rotating right');
+            //console.log(lander.rotation)
+
+        }
+        function rotateLeft(elapsedTime){
+            lander.rotation += lander.rotateRate * (elapsedTime/1000);
+            //console.log('rotating Left');
+            
+        }
+        return{
+            thrust: thrust,
+            rotateRight: rotateRight,
+            rotateLeft:rotateLeft
+        }
+    }();
 
     lander.ready = false;
     lander.image = new Image();
@@ -40,6 +66,7 @@ specs = function(){
     return{
         game,
         landscape,
-        lander
+        lander,
+        landerInput
     }
 }

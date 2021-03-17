@@ -16,10 +16,11 @@ myGame.screens['newGame']= function(){
         requestAnimationFrame(gameLoop)
     }
 
-    function processInput(){
+    function processInput(elapsedTime){
         //console.log('Process Input checking in')
+        inputHandler.update(elapsedTime);
     }
-    function update(){
+    function update(elapsedTime){
         //console.log('Update Checking in')
         updater.updateLander();
 
