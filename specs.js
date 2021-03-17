@@ -36,7 +36,9 @@ specs = function(){
 
     landerInput = function() {
         function thrust(){
-            updater.addVectors(lander.vector, {magnitude: 2, direction: lander.rotation})
+            spec.lander.vector = updater.vectorAdder(lander.vector, {magnitude: 2, direction: lander.rotation})
+            console.log('vector');
+            console.log(lander.vector)
            // console.log('boom')
         }
         function rotateRight(elapsedTime){

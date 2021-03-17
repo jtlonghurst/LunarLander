@@ -1,14 +1,23 @@
 updater = function (){
     function updateLander(){
-        spec.lander.cornerX = lander.x - ((1/2)* lander.width);
-        spec.lander.cornerY = lander.y - ((1/2)* lander.height);
+        
         //This is where we want to adjust the location of the lander.
-        let vectorX = lander.vector.magnitude * Math.cos(lander.vector.direction);
-        let vectorY = lander.vector.magnitude * Math.sin(lander.vector.direction);
+        let vectorX = spec.lander.vector.magnitude * Math.cos(lander.vector.direction);
+        let vectorY = spec.lander.vector.magnitude * Math.sin(lander.vector.direction);
 
         spec.lander.x += vectorX;
         spec.lander.y += vectorY; 
-        
+
+       /* console.log('x and y')
+        console.log(spec.lander.x)
+        console.log(spec.lander.y)
+        console.log('magnitude');
+        console.log(spec.lander.magnitude);
+        console.log('direction')
+        console.log(spec.lander.direction);
+*/
+        spec.lander.cornerX = spec.lander.x - ((1/2)* spec.lander.width);
+        spec.lander.cornerY = spec.lander.y - ((1/2)* spec.lander.height);
     }
 
     function vectorAdder(vector1, vector2){
