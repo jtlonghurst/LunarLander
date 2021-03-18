@@ -11,6 +11,9 @@ creator = function(){
         return spikyRecurse(startPoint, endPoint, 0, numIter);
 
     }
+    //THINGS TO CHANGE
+    //make sure the first depth or two has big hills.
+    //Do your best to randomize the start and end heights 
     
     /**
      * This function does the recursion that is necessary for the spikyLine function.
@@ -22,11 +25,42 @@ creator = function(){
      * @returns a list of all the points in the now spiky line
      */
     function spikyRecurse(startPoint, endPoint, depth, goalDepth){
-        //set up boundaries for height
-        let marginSize = spec.landscape.maxHeight - spec.landscape.minHeight;
-        //Select a random height for half of the distance
-        let y = Math.floor(Math.random()*marginSize) + spec.landscape.minHeight;
-        let x = (Math.abs(endPoint - startPoint)/2) + startPoint;
+        //determine whether it should be a big spike or a small spike
+        let bigOne = Math.floor(Math.random() * 100);
+        let y = 0
+        if(bigOne >90){
+            let heightAve = (Math.abs(endPoint[1] - startPoint[1])/2) + startPoint[1];
+            //set up boundaries for height
+            //let marginSize = spec.landscape.maxHeight - spec.landscape.minHeight;
+            //Select a random height for half of the distance
+            let heightMarginMin = heightAve - spec.landscape.bigHillDiff;
+            let heightMarginMax = heightAve + spec.landscape.bigHillDiff;
+            let marginSize = heightMarginMax - heightMarginMin;
+            y = Math.floor(Math.random()*marginSize) + spec.landscape.heightMarginMin;
+        }
+        else{ 
+            let heightAve = (Math.abs(endPoint[1] - startPoint[1])/2) + startPoint[1];
+            console.log('heightAve')
+            console.log(heightAve);
+            console.log('endpoint');
+            console.log(endPoint[1]);
+            console.log('startPoint');
+            console.log(startPoint[1]);
+
+            let heightMarginMin = heightAve - spec.landscape.smallHillDiff;
+            let heightMarginMax = heightAve + spec.landscape.smallHillDiff;
+            let heightMargin = heightMarginMax - heightMarginMin;
+            y = Math.floor(Math.random()* heightMargin)+ heightMarginMin;
+            
+
+        }
+        if(y > spec.landscape.maxHeight){
+            y = spec.landscape.maxHeight;
+        } 
+        if(y < spec.landscape.minHeight){
+            y = spec.landscape.minHeight;
+        }
+        let x = (Math.abs(endPoint[0] - startPoint[0])/2) + startPoint[0];
 
         //console.log(x);
         //If you are at the right amount of spikiness return 
@@ -34,8 +68,8 @@ creator = function(){
             return [[x,y]] 
         }
         //if not go deeper
-        let begin = spikyRecurse(startPoint,x, depth+1, goalDepth);
-        let end = spikyRecurse(x,endPoint, depth+1, goalDepth);
+        let begin = spikyRecurse(startPoint,[x,y], depth+1, goalDepth);
+        let end = spikyRecurse([x,y],endPoint, depth+1, goalDepth);
         return begin.concat([[x,y]], end);
         
     }
@@ -166,14 +200,14 @@ creator = function(){
         //resetting 
         spec.landscape.landLine = [];
         spec.landscape.safeList = [];
-        let current = spec.landscape.startPathX;
+        let current = [spec.landscape.startPathX, spec.landscape.height];
         //making new safe spots 
         selectSafeZones(numSafeSpots, lengthSafeSpots);
         for(let i =0; i < spec.landscape.safeList.length; i++){
-            console.log('current');
-            console.log(current);
+            //console.log('current');
+            //console.log(current);
             //Jagged line to safe spot
-            let jagged = spikyLine(current, spec.landscape.safeList[i][0],spikiness); 
+            let jagged = spikyLine(current, spec.landscape.safeList[i],spikiness); 
             spec.landscape.landLine = spec.landscape.landLine.concat(jagged);//spikyLine(current, spec.landscape.safeList[i][0],spikiness));
            // console.log('jagged ' + i);
             //console.log(jagged)
@@ -187,14 +221,14 @@ creator = function(){
             //console.log([spec.landscape.safeList[i][0] + lengthSafeSpots, spec.landscape.safeList[i][1]]);
 
             //setting up for the next round 
-            current = spec.landscape.safeList[i][0]+lengthSafeSpots;
+            current = [spec.landscape.safeList[i][0]+lengthSafeSpots,spec.landscape.safeList[i][1]];
         }
         //finishing up
-        spec.landscape.landLine = spec.landscape.landLine.concat(spikyLine(current, spec.landscape.endPathX,spikiness));
+        spec.landscape.landLine = spec.landscape.landLine.concat(spikyLine(current, [spec.landscape.endPathX, spec.landscape.height],spikiness));
     } 
 
     function levelOne(){
-        makeLevel(3, 2, 150);
+        makeLevel(4, 2, 150);
     }
     return{
         spikyLine: spikyLine,

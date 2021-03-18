@@ -10,6 +10,8 @@ specs = function(){
         endPathX:999,
         maxHeight: 999,
         minHeight: 400,//These will help determine the highest peak and the lowestValley
+        smallHillDiff: 20,
+        bigHillDiff: 50,
         landLine: [], 
         strokeStyle: 'rgb(85, 243, 243)',
         fillStyle : 'rgb(85,243,243)',
