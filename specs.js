@@ -22,33 +22,45 @@ specs = function(){
         safeList : [] 
 
     }
-    //lander = {}
+    //the specs for the lander
     lander = {
         x:200,
         y:200,
-        width: 75,
-        height: 75, 
+        width: 50,
+        height: 50, 
         src:'images/lander.png',
         rotateRate: Math.PI,
         rotation: (Math.PI/2),
         vector:{magnitude:0,direction:0}
     }
 
+    //The input handlers for the lander 
     landerInput = function() {
-        function thrust(){
-            spec.lander.vector = updater.vectorAdder(lander.vector, {magnitude: 2, direction: lander.rotation})
+        function thrust(elapsedTime){
+            console.log('lander vector before')
+            console.log(lander.vector);
+            console.log('other before vector');
+            console.log({magnitude: .02, direction: (lander.rotation - (Math.PI/2))});
+            //.02 is a good acceleration rate
+            //The direction -pi/2 just makes it look like the thrust is coming out of the bottom of the lander. 
+            //I think it is having a problem with negative numbers. 
+            lander.vector = updater.vectorAdder(lander.vector, {magnitude: .0175 , direction: (lander.rotation- (Math.PI/2))})
+             
             console.log('vector');
             console.log(lander.vector)
            // console.log('boom')
+           //The problem I've found is that when you go in the opposite the direction of the one you are going, 
+           //the lander will get stuck jumping back and forth between negative and positive values, just stuck, and I don't know why.
+           //This happens whether or not the modifier is applied
         }
         function rotateRight(elapsedTime){
-            lander.rotation -= lander.rotateRate * (elapsedTime/1000);  
+            lander.rotation += lander.rotateRate * (elapsedTime/1000);  
            // console.log('rotating right');
             //console.log(lander.rotation)
 
         }
         function rotateLeft(elapsedTime){
-            lander.rotation += lander.rotateRate * (elapsedTime/1000);
+            lander.rotation -= lander.rotateRate * (elapsedTime/1000);
             //console.log('rotating Left');
             
         }
