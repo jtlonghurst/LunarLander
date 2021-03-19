@@ -1,4 +1,36 @@
 creator = function(){
+
+    let usePrevious = false;
+    let y2;
+    /*
+    This code is from Dean Mathias's notes on particle generators. 
+    This should give me a normally distributed random variable. 
+    */
+    function nextGaussian(mean, stdDev) {
+        let x1 = 0;
+        let x2 = 0;
+        let y1 = 0;
+        let z = 0;
+
+        if (usePrevious) {
+            usePrevious = false;
+            return mean + y2 * stdDev;
+        }
+
+        usePrevious = true;
+
+        do {
+            x1 = 2 * Math.random() - 1;
+            x2 = 2 * Math.random() - 1;
+            z = (x1 * x1) + (x2 * x2);
+        } while (z >= 1);
+        
+        z = Math.sqrt((-2 * Math.log(z)) / z);
+        y1 = x1 * z;
+        y2 = x2 * z;
+        
+        return mean + y1 * stdDev;
+    }
     /**
      * Starting at the point given and going to the point
      * this will split the line in half and decide a new height for the line. 
@@ -25,66 +57,19 @@ creator = function(){
      * @returns a list of all the points in the now spiky line
      */
     function spikyRecurse(startPoint, endPoint, depth, goalDepth){
-        //determine whether it should be a big spike or a small spike
-        let bigOne = Math.floor(Math.random() * 100);
-        let y = 0;
-        let heightAve = (Math.abs(endPoint[1] - startPoint[1])/2) + startPoint[1];
-        if(bigOne > 80|| depth <= 1){
-            
-            if(heightAve ===0){
-                heightAve = endPoint[1];
-            }
-            //set up boundaries for height
-            //let marginSize = spec.landscape.maxHeight - spec.landscape.minHeight;
-            //Select a random height for half of the distance
-            console.log('depth');
-            console.log(depth);
-            console.log('heightAve');
-            console.log(heightAve);
-            console.log('endpoint');
-            console.log(endPoint[1]);
-            console.log('startPoint');
-            console.log(startPoint[1]);
-            let heightMarginMin = heightAve - spec.landscape.bigHillDiff;
-            console.log('height min');
-            console.log(heightMarginMin);
-            let heightMarginMax = heightAve + spec.landscape.bigHillDiff;
-            console.log('height max');
-            console.log(heightMarginMax)
-            let marginSize = heightMarginMax - heightMarginMin;
-            console.log('marginSize');
-            console.log(marginSize)
-            console.log('random');
-            console.log(Math.floor(Math.random()*marginSize)+heightMarginMin);
-            y = Math.floor(Math.random()*marginSize) + heightMarginMin;
-            console.log(y);
-        }
-        else{ 
-            if(heightAve ===0){
-                heightAve = endPoint[1];
-            }
-            console.log('depth');
-            console.log(depth);
-            console.log('heightAve')
-            console.log(heightAve);
-            console.log('endpoint');
-            console.log(endPoint[1]);
-            console.log('startPoint');
-            console.log(startPoint[1]);
-
-            let heightMarginMin = heightAve - spec.landscape.smallHillDiff;
-            let heightMarginMax = heightAve + spec.landscape.smallHillDiff;
-            let heightMargin = heightMarginMax - heightMarginMin;
-            y = Math.floor(Math.random()* heightMargin)+ heightMarginMin;
-            console.log(y);
-        }
+        
+        let x = (Math.abs(endPoint[0] - startPoint[0])/2) + startPoint[0];
+        let rg = nextGaussian(0,1);
+        let s = 1.7; // Use this to adjust how the terrain works. 
+        let lineLength = Math.abs(endPoint[0]-startPoint[0]);
+        let r = s * rg * lineLength;
+        let y = ((startPoint[1] + endPoint[1])/2)+ r  
         if(y > spec.landscape.maxHeight){
             y = spec.landscape.maxHeight;
         } 
         if(y < spec.landscape.minHeight){
             y = spec.landscape.minHeight;
         }
-        let x = (Math.abs(endPoint[0] - startPoint[0])/2) + startPoint[0];
 
         //console.log(x);
         //If you are at the right amount of spikiness return 
@@ -97,6 +82,9 @@ creator = function(){
         return begin.concat([[x,y]], end);
         
     }
+
+    
+    
 
     //the purpose of this is to allow the safe zones to be sorted in the list so they don't come out in the wrong order 
     
