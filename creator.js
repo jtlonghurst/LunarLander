@@ -27,19 +27,44 @@ creator = function(){
     function spikyRecurse(startPoint, endPoint, depth, goalDepth){
         //determine whether it should be a big spike or a small spike
         let bigOne = Math.floor(Math.random() * 100);
-        let y = 0
-        if(bigOne >90){
-            let heightAve = (Math.abs(endPoint[1] - startPoint[1])/2) + startPoint[1];
+        let y = 0;
+        let heightAve = (Math.abs(endPoint[1] - startPoint[1])/2) + startPoint[1];
+        if(bigOne > 80|| depth <= 1){
+            
+            if(heightAve ===0){
+                heightAve = endPoint[1];
+            }
             //set up boundaries for height
             //let marginSize = spec.landscape.maxHeight - spec.landscape.minHeight;
             //Select a random height for half of the distance
+            console.log('depth');
+            console.log(depth);
+            console.log('heightAve');
+            console.log(heightAve);
+            console.log('endpoint');
+            console.log(endPoint[1]);
+            console.log('startPoint');
+            console.log(startPoint[1]);
             let heightMarginMin = heightAve - spec.landscape.bigHillDiff;
+            console.log('height min');
+            console.log(heightMarginMin);
             let heightMarginMax = heightAve + spec.landscape.bigHillDiff;
+            console.log('height max');
+            console.log(heightMarginMax)
             let marginSize = heightMarginMax - heightMarginMin;
-            y = Math.floor(Math.random()*marginSize) + spec.landscape.heightMarginMin;
+            console.log('marginSize');
+            console.log(marginSize)
+            console.log('random');
+            console.log(Math.floor(Math.random()*marginSize)+heightMarginMin);
+            y = Math.floor(Math.random()*marginSize) + heightMarginMin;
+            console.log(y);
         }
         else{ 
-            let heightAve = (Math.abs(endPoint[1] - startPoint[1])/2) + startPoint[1];
+            if(heightAve ===0){
+                heightAve = endPoint[1];
+            }
+            console.log('depth');
+            console.log(depth);
             console.log('heightAve')
             console.log(heightAve);
             console.log('endpoint');
@@ -51,8 +76,7 @@ creator = function(){
             let heightMarginMax = heightAve + spec.landscape.smallHillDiff;
             let heightMargin = heightMarginMax - heightMarginMin;
             y = Math.floor(Math.random()* heightMargin)+ heightMarginMin;
-            
-
+            console.log(y);
         }
         if(y > spec.landscape.maxHeight){
             y = spec.landscape.maxHeight;

@@ -8,10 +8,10 @@ specs = function(){
         landingBorder: 15, //specifies how far from the edge the landing zone has to be. 
         startPathX: 0,
         endPathX:999,
-        maxHeight: 999,
+        maxHeight: 900,
         minHeight: 400,//These will help determine the highest peak and the lowestValley
         smallHillDiff: 20,
-        bigHillDiff: 50,
+        bigHillDiff: 200,
         landLine: [], 
         strokeStyle: 'rgb(85, 243, 243)',
         fillStyle : 'rgb(85,243,243)',
