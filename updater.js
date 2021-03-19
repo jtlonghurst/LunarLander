@@ -4,11 +4,11 @@ updater = function (){
     function updateLander(){
         
         //This is where we want to adjust the location of the lander.
-        let vectorX = spec.lander.vector.magnitude * Math.cos(lander.vector.direction);
-        let vectorY = spec.lander.vector.magnitude * Math.sin(lander.vector.direction);
+        //let vectorX = spec.lander.vector.magnitude * Math.cos(lander.vector.direction);
+        //let vectorY = spec.lander.vector.magnitude * Math.sin(lander.vector.direction);
 
-        spec.lander.x += vectorX;
-        spec.lander.y += vectorY; 
+        spec.lander.x += spec.lander.vector.x;
+        spec.lander.y += spec.lander.vector.y; 
 
        /* console.log('x and y')
         console.log(spec.lander.x)
@@ -24,16 +24,14 @@ updater = function (){
 
     //This function is useful for adding two vectors together 
     //It is useful for adding force vectors to the lander. 
-    function vectorAdder(vector1, vector2){
+    function vectorAdder(landerVector, vector2){
        /* console.log('vectors 1')
         console.log(vector1);
         console.log(vector2);*/
         //vector1.direction = vector1.direction%(2*Math.PI);
         //vector2.direction = vector2.direction%(2*Math.PI);
 
-//Converts to cartesian 
-        let y1 = vector1.magnitude * Math.sin(vector1.direction);
-        let x1 = vector1.magnitude * Math.cos(vector1.direction);
+//Converts to cartesian
         
         /*console.log('vectors 2');
         console.log(x1);
@@ -50,15 +48,15 @@ updater = function (){
         console.log(y2);*/
 
 //Adds vectors together
-        let newX = x1 + x2 
-        let newY = y1 + y2
+        let newX = landerVector.x + x2 
+        let newY = landerVector.y + y2
 
         /*console.log('vectors 4');
         console.log(newX);
         console.log(newY);*/
         
 //converts back to polar         
-        let magnitude = (Math.sqrt((newX**2)+ (newY**2)));
+       /* let magnitude = (Math.sqrt((newX**2)+ (newY**2)));
         if(newX ===0){
             newX = .00000000001//This keeps the lander from popping out of existance if newX == 0
         }
@@ -67,15 +65,15 @@ updater = function (){
         if (magnitude < 0){
             magnitude = Math.abs(magnitude);
             direction = -direction;
-        } 
+        }*/ 
         /*
         console.log('vectors 5');
         console.log (magnitude);
         console.log(direction);
         */
         return{
-            magnitude:magnitude,
-            direction:direction
+            x:newX,
+            y:newY
         }
     }
 

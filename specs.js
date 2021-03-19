@@ -31,7 +31,7 @@ specs = function(){
         src:'images/lander.png',
         rotateRate: Math.PI,
         rotation: (Math.PI/2),
-        vector:{magnitude:0,direction:0}
+        vector:{x:0,y:0}
     }
 
     //The input handlers for the lander 
