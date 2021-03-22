@@ -55,9 +55,51 @@ Draw = function(){
             context.restore();
         }
     }
+
+    function drawBackground(){
+        if(spec.background.ready){
+            context.drawImage(
+                spec.background.image,
+                spec.background.x,
+                spec.background.y,
+                spec.background.width,
+                spec.background.height
+            );
+        }
+    }
+
+    function drawHud(){
+        context.save();
+        context.fillStyle = spec.yVel.fillStyle;
+        context.strokeStyle = spec.yVel.strokeStyle;
+        context.font = spec.yVel.font;
+        context.baseline = 'top'
+        context.fillText('Vertical velocity: '+ -(Math.floor(spec.lander.vector.y)), spec.yVel.x, spec.yVel.y);
+        context.restore();
+
+        context.save();
+        context.fillStyle = spec.xVel.fillStyle;
+        context.strokeStyle = spec.xVel.strokeStyle;
+        context.font = spec.xVel.font;
+        context.baseline = 'top'
+        context.fillText('Horizontal velocity: '+ Math.abs(Math.floor(spec.lander.vector.x)), spec.xVel.x, spec.xVel.y);
+        context.restore();
+
+        context.save();
+        context.fillStyle = spec.rot.fillStyle;
+        context.strokeStyle = spec.rot.strokeStyle;
+        context.font = spec.rot.font;
+        context.baseline = 'top'
+        context.fillText('Rotation: '+ Math.floor(Math.abs(((spec.lander.rotation % (2* Math.PI)) * 180)/Math.PI)), spec.rot.x, spec.rot.y);
+        context.restore();
+
+        
+    }
     return{
         drawLine: drawLine,
         clear: clear,
-        drawLander: drawLander
+        drawLander: drawLander,
+        drawBackground: drawBackground,
+        drawHud: drawHud
     }
 }();

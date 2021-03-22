@@ -14,14 +14,15 @@ specs = function(){
         bigHillDiff: 200,
         landLine: [], 
         strokeStyle: 'rgb(85, 243, 243)',
-        fillStyle : 'rgb(85,243,243)',
+        fillStyle : 'darkslategray',
         lv1Spikiness: 4,//This determines the depth of the spiky line function. 
         lv2Spikiness: 5, 
         lv1LandingLength: 100,
         lv2landingLength: 75,
         lv1PlatformNumber:2,
         lv2PlatformNumber:1,
-        safeList : [] 
+        safeList : [], 
+        currentLevel:1
 
     }
     //the specs for the lander
@@ -33,23 +34,31 @@ specs = function(){
         src:'images/lander.png',
         rotateRate: Math.PI,
         rotation: (Math.PI/2),
-        vector:{x:0,y:0}
+        vector:{x:0,y:0},
+        circle:{
+            center:{
+            x: 200,
+            y: 200,
+            },
+            radius: 25//update this is the size of the lander changes.
+        },
+        landed : false,
     }
 
     //The input handlers for the lander 
     landerInput = function() {
         function thrust(elapsedTime){
-            console.log('lander vector before')
+           /* console.log('lander vector before')
             console.log(lander.vector);
             console.log('other before vector');
-            console.log({magnitude: .02, direction: (lander.rotation - (Math.PI/2))});
+            console.log({magnitude: .02, direction: (lander.rotation - (Math.PI/2))});*/
             //.02 is a good acceleration rate
             //The direction -pi/2 just makes it look like the thrust is coming out of the bottom of the lander. 
             //I think it is having a problem with negative numbers. 
             lander.vector = updater.vectorAdder(lander.vector, {magnitude: .0175 , direction: (lander.rotation- (Math.PI/2))})
              
-            console.log('vector');
-            console.log(lander.vector)
+            /*console.log('vector');
+            console.log(lander.vector)*/
            // console.log('boom')
            //The problem I've found is that when you go in the opposite the direction of the one you are going, 
            //the lander will get stuck jumping back and forth between negative and positive values, just stuck, and I don't know why.
@@ -79,10 +88,55 @@ specs = function(){
         lander.ready = true; 
     }
     lander.image.src = lander.src; 
+
+    background = {
+        src:'images/background.png',
+        width : 1000,
+        height : 1000,
+        x : 0,
+        y : 0
+    }
+    background.ready = false;
+    background.image = new Image();
+    background.image.onload = function(){
+        background.ready = true;
+    }
+    background.image.src = background.src;
+
+    yVel = {
+        font: 'bold 15pt arial',
+        x:750,
+        y:20,
+        strokeStyle: 'white',
+        fillStyle: 'white',
+        text: 'Vertical Velocity: '+ lander.vector.y,
+
+    }
+    xVel = {
+        font: 'bold 15pt arial',
+        x: 750,
+        y: 40,
+        strokeStyle: 'white',
+        fillStyle: 'white',
+        text: 'Horizontal Velocity: '+ lander.vector.x,
+    }
+    rot = {
+        font:'bold 15pt arial',
+        x:750,
+        y:60,
+        strokeStyle: 'white',
+        fillStyle: 'white',
+        text: 'Rotation :' +(lander.rotation*180)/Math.PI 
+    }
     return{
         game,
         landscape,
         lander,
-        landerInput
+        landerInput,
+        xVel,
+        yVel,
+        rot, 
+        background
     }
+
 }

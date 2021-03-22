@@ -23,13 +23,16 @@ myGame.screens['newGame']= function(){
     function update(elapsedTime){
         //console.log('Update Checking in')
         updater.updateLander();
+        updater.collisionDetection(spec.landscape.currentLevel);
 
     }
     function render(){
        // console.log('render checking in')
        Draw.clear(spec.game.size);
+       Draw.drawBackground();
       // console.log(spec.landscape.landLine);
        Draw.drawLine(spec.landscape.landLine);
+       Draw.drawHud();
        Draw.drawLander();
 
     }
