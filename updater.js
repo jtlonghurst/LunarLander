@@ -2,6 +2,10 @@ updater = function (){
     //This function makes sure that the point that we are drawing the lander from is in the right place. 
 
     function updateLander(){
+
+        //Add Gravity first
+        if(!spec.lander.landed) 
+        spec.lander.vector = vectorAdder(spec.lander.vector, {magnitude: .01, direction: Math.PI/2})
         
         //This is where we want to adjust the location of the lander.
         //let vectorX = spec.lander.vector.magnitude * Math.cos(lander.vector.direction);
@@ -105,9 +109,14 @@ updater = function (){
     function crashShip(){
         console.log('crash');
         spec.lander.crashed = true; 
+        spec.lander.vector.x = 0;
+        spec.lander.vector.y = 0;
     }
     function landShip(level){
         console.log('level Complete!');
+        spec.lander.vector.x = 0;
+        spec.lander.vector.y = 0;
+        
     }
     //function toLevelTwo(){ 
     //}

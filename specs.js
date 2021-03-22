@@ -56,8 +56,9 @@ specs = function(){
             //.02 is a good acceleration rate
             //The direction -pi/2 just makes it look like the thrust is coming out of the bottom of the lander. 
             //I think it is having a problem with negative numbers. 
-            lander.vector = updater.vectorAdder(lander.vector, {magnitude: .0175 , direction: (lander.rotation- (Math.PI/2))})
-             
+            if(!lander.landed){
+                lander.vector = updater.vectorAdder(lander.vector, {magnitude: .0175 , direction: (lander.rotation- (Math.PI/2))})
+            }
             /*console.log('vector');
             console.log(lander.vector)*/
            // console.log('boom')
@@ -66,13 +67,17 @@ specs = function(){
            //This happens whether or not the modifier is applied
         }
         function rotateRight(elapsedTime){
-            lander.rotation += lander.rotateRate * (elapsedTime/1000);  
+            if(!lander.landed){
+                lander.rotation += lander.rotateRate * (elapsedTime/1000);
+            }  
            // console.log('rotating right');
             //console.log(lander.rotation)
 
         }
         function rotateLeft(elapsedTime){
-            lander.rotation -= lander.rotateRate * (elapsedTime/1000);
+            if(!lander.landed){
+                lander.rotation -= lander.rotateRate * (elapsedTime/1000);
+            }
             //console.log('rotating Left');
             
         }
