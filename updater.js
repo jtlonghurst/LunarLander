@@ -104,6 +104,7 @@ updater = function (){
 
     function crashShip(){
         console.log('crash');
+        spec.lander.crashed = true; 
     }
     function landShip(level){
         console.log('level Complete!');

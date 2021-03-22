@@ -43,6 +43,7 @@ specs = function(){
             radius: 25//update this is the size of the lander changes.
         },
         landed : false,
+        crashed: false
     }
 
     //The input handlers for the lander 
@@ -128,6 +129,21 @@ specs = function(){
         fillStyle: 'white',
         text: 'Rotation :' +(lander.rotation*180)/Math.PI 
     }
+    goodEnd = {
+        font:'bold 30pt arial',
+        x:300,
+        y:200,
+        strokeStyle: 'white',
+        fillStyle: 'white',
+
+    }
+    badEnd = {
+        font:'bold 30pt arial',
+        x:150,
+        y:200,
+        strokeStyle: 'white',
+        fillStyle: 'white',
+    }
     return{
         game,
         landscape,
@@ -136,7 +152,9 @@ specs = function(){
         xVel,
         yVel,
         rot, 
-        background
+        background,
+        goodEnd,
+        badEnd
     }
 
 }

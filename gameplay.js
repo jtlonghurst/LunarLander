@@ -34,6 +34,7 @@ myGame.screens['newGame']= function(){
        Draw.drawLine(spec.landscape.landLine);
        Draw.drawHud();
        Draw.drawLander();
+       Draw.drawAnnouncement();
 
     }
 

@@ -95,11 +95,35 @@ Draw = function(){
 
         
     }
+    function drawAnnouncement(){
+        if(spec.lander.landed && spec.lander.crashed){
+            context.save();
+            context.fillStyle = spec.badEnd.fillStyle;
+            context.strokeStyle = spec.badEnd.strokeStyle;
+            context.font = spec.badEnd.font;
+            context.baseline = 'top'
+            context.fillText("Well at least it's on the moon now.", spec.badEnd.x, spec.badEnd.y);
+            context.restore();
+
+        }
+        else if(spec.lander.landed){
+            context.save();
+            context.fillStyle = spec.goodEnd.fillStyle;
+            context.strokeStyle = spec.goodEnd.strokeStyle;
+            context.font = spec.goodEnd.font;
+            context.baseline = 'top'
+            context.fillText("Mission Accomplished", spec.goodEnd.x, spec.goodEnd.y);
+            context.restore();
+
+
+        }
+    }
     return{
         drawLine: drawLine,
         clear: clear,
         drawLander: drawLander,
         drawBackground: drawBackground,
-        drawHud: drawHud
+        drawHud: drawHud,
+        drawAnnouncement: drawAnnouncement,
     }
 }();
