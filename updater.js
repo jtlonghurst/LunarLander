@@ -111,6 +111,7 @@ updater = function (){
         spec.lander.crashed = true; 
         spec.lander.vector.x = 0;
         spec.lander.vector.y = 0;
+        spec.kaboom.makeParticles(200, [0, 2*Math.PI]);
     }
     function landShip(level){
         console.log('level Complete!');

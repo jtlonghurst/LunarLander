@@ -23,6 +23,8 @@ myGame.screens['newGame']= function(){
     function update(elapsedTime){
         //console.log('Update Checking in')
         updater.updateLander();
+        spec.thruster.update(elapsedTime);
+        spec.kaboom.update(elapsedTime);
         updater.collisionDetection(spec.landscape.currentLevel);
 
     }
@@ -33,6 +35,8 @@ myGame.screens['newGame']= function(){
       // console.log(spec.landscape.landLine);
        Draw.drawLine(spec.landscape.landLine);
        Draw.drawHud();
+       spec.thrusterRender.render();
+       spec.kaboomRender.render();
        Draw.drawLander();
        Draw.drawAnnouncement();
 

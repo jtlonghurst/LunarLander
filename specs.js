@@ -43,8 +43,20 @@ specs = function(){
             radius: 25//update this is the size of the lander changes.
         },
         landed : false,
-        crashed: false
+        crashed: false, 
+        thrusterWidth: Math.PI/8,
     }
+
+    thruster = particleGen({
+        size: {mean: 10, stdev: 1},
+        lifetime: {mean: 3, stdev: 1},
+        vel: {mean: 50, stdev:2},
+        lander: lander,
+    })
+
+    thrusterRender = ParticleSystemRenderer(thruster, 'images/smoke-2.png');
+
+    
 
     //The input handlers for the lander 
     landerInput = function() {
@@ -57,7 +69,10 @@ specs = function(){
             //The direction -pi/2 just makes it look like the thrust is coming out of the bottom of the lander. 
             //I think it is having a problem with negative numbers. 
             if(!lander.landed){
-                lander.vector = updater.vectorAdder(lander.vector, {magnitude: .0175 , direction: (lander.rotation- (Math.PI/2))})
+                lander.vector = updater.vectorAdder(lander.vector, {magnitude: .0175 , direction: (lander.rotation- (Math.PI/2))});
+                let min = (lander.rotation + (Math.PI/2))- lander.thrusterWidth;
+                let max = (lander.rotation + (Math.PI/2))+ lander.thrusterWidth;
+                thruster.makeParticles(5, [min, max]);
             }
             /*console.log('vector');
             console.log(lander.vector)*/
@@ -87,6 +102,15 @@ specs = function(){
             rotateLeft:rotateLeft
         }
     }();
+
+    kaboom = particleGen({
+        size: {mean: 10, stdev: 1},
+        lifetime: {mean: 3, stdev: 1},
+        vel: {mean: 100, stdev:2},
+        lander: lander,
+    })
+
+    kaboomRender = ParticleSystemRenderer(kaboom, 'images/fire.png');
 
     lander.ready = false;
     lander.image = new Image();
@@ -159,7 +183,11 @@ specs = function(){
         rot, 
         background,
         goodEnd,
-        badEnd
+        badEnd,
+        thruster, 
+        thrusterRender,
+        kaboom,
+        kaboomRender
     }
 
 }

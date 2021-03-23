@@ -39,20 +39,22 @@ Draw = function(){
      */
     function drawLander(){
         if(spec.lander.ready){
-            context.save();
+            if(!spec.lander.crashed){
+                context.save();
             
-            context.translate(spec.lander.x, spec.lander.y);
-            context.rotate(spec.lander.rotation);
-            context.translate(-spec.lander.x, -spec.lander.y);
+                context.translate(spec.lander.x, spec.lander.y);
+                context.rotate(spec.lander.rotation);
+                context.translate(-spec.lander.x, -spec.lander.y);
 
-            context.drawImage(
-                spec.lander.image,
-                spec.lander.cornerX,
-                spec.lander.cornerY,
-                spec.lander.width,
-                spec.lander.height
-                );
-            context.restore();
+                context.drawImage(
+                    spec.lander.image,
+                    spec.lander.cornerX,
+                    spec.lander.cornerY,
+                    spec.lander.width,
+                    spec.lander.height
+                    );
+                context.restore();
+            }
         }
     }
 
@@ -118,6 +120,25 @@ Draw = function(){
 
         }
     }
+
+    function drawTexture(image, size, center, rotation){
+       // console.log('i am drawing')
+        context.save(); 
+        context.translate(center.x, center.y);
+        context.rotate(rotation);
+        context.translate(-center.x, -center.y);
+
+        context.drawImage(
+            image, 
+            center.x - size.x/2,
+            center.y - size.y/2,
+            size.x, 
+            size.y
+        );
+
+        context.restore(); 
+
+    }
     return{
         drawLine: drawLine,
         clear: clear,
@@ -125,5 +146,34 @@ Draw = function(){
         drawBackground: drawBackground,
         drawHud: drawHud,
         drawAnnouncement: drawAnnouncement,
+        drawTexture: drawTexture,
     }
 }();
+
+ParticleSystemRenderer = function(system, imageSrc){
+
+    let image = new Image();
+    let isReady = false; 
+    
+    image.onload = function(){
+        isReady = true;
+        //console.log('ready')
+    }
+
+    image.src = imageSrc; 
+
+    function render(){
+        if(isReady){
+            particle = system.getParticles
+            //console.log('particle length');
+            //console.log(particle.length);
+            for (let i = 0; i < particle.length; i++){
+                //console.log('I should be drawing things.')
+                Draw.drawTexture(image, particle[i].size, particle[i].center, particle[i].rotation);
+            }
+        }
+
+    }
+    return {render:render,}
+
+}
