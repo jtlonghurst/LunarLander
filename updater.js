@@ -116,6 +116,7 @@ updater = function (){
 
     function crashShip(){
         console.log('crash');
+        spec.lander.sounds['boom'].play();
         spec.lander.crashed = true; 
         spec.lander.vector.x = 0;
         spec.lander.vector.y = 0;
@@ -125,6 +126,7 @@ updater = function (){
     }
     function landShip(){
         console.log('level Complete!');
+        spec.lander.sounds['yay'].play();
         spec.lander.vector.x = 0;
         spec.lander.vector.y = 0;
         //put the countdown here; 

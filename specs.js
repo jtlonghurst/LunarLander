@@ -47,7 +47,9 @@ specs = function(){
         landed : false,
         crashed: false, 
         thrusterWidth: Math.PI/8,
-        default: {x: 200, y: 200, rotation: Math.PI/2}
+        default: {x: 200, y: 200, rotation: Math.PI/2},
+        sounds: {},
+        thruster : false,
     }
 
     thruster = particleGen({
@@ -63,7 +65,25 @@ specs = function(){
 
     //The input handlers for the lander 
     landerInput = function() {
-        function thrust(elapsedTime){
+        function stopThrust(){
+            let key = inputHandler.kh.findKey(thrust)
+            console.log(key);
+            return new Promise((resolve)=>{
+                window.addEventListener('keyup', stopIt);
+                function stopIt(e){
+                    console.log(e.key);
+                    if(e.key === key){
+                        lander.sounds['thrust'].pause();
+                        lander.thruster = false; 
+                        resolve();
+                    }
+
+                }
+
+            })
+        }
+
+        async function thrust(elapsedTime){
            /* console.log('lander vector before')
             console.log(lander.vector);
             console.log('other before vector');
@@ -72,10 +92,16 @@ specs = function(){
             //The direction -pi/2 just makes it look like the thrust is coming out of the bottom of the lander. 
             //I think it is having a problem with negative numbers. 
             if(!lander.landed){
+                if(!lander.thruster){
+                    lander.sounds['thrust'].play();
+                    lander.thruster = true;
+                    stopThrust();
+                }
                 lander.vector = updater.vectorAdder(lander.vector, {magnitude: .0175 , direction: (lander.rotation- (Math.PI/2))});
                 let min = (lander.rotation + (Math.PI/2))- lander.thrusterWidth;
                 let max = (lander.rotation + (Math.PI/2))+ lander.thrusterWidth;
                 thruster.makeParticles(5, [min, max]);
+                //lander.sounds['thrust'].pause();
             }
             /*console.log('vector');
             console.log(lander.vector)*/

@@ -7,6 +7,17 @@ myGame.screens['newGame']= function(){
     let previousTimeStamp = performance.now();
     function initialize(){
 
+        //https://freesound.org/people/V-ktor/sounds/435413/
+        creator.loadSound('sound/boom.wav', 'boom');
+
+        //https://freesound.org/people/LimitSnap_Creations/sounds/318688/
+        creator.loadSound('sound/thrust.wav', 'thrust');
+
+        //https://freesound.org/people/Topschool/sounds/443493/
+        creator.loadSound('sound/yay.mp3', 'yay');
+
+        spec.lander.sounds['yay'].volume = .50;
+
     }
     function run(){
         previousTimeStamp = performance.now();

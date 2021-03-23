@@ -245,10 +245,18 @@ creator = function(){
     function levelTwo(){
         makeLevel(4, 1, 100);
     }
+
+    function loadSound(src, name){
+        let sound = new Audio();
+        sound.src = src
+        spec.lander.sounds[name] = sound 
+        return sound;  
+    }
     return{
         nextGaussian: nextGaussian, 
         spikyLine: spikyLine,
         levelOne: levelOne,
         levelTwo: levelTwo,
+        loadSound: loadSound,
     }
 }();
