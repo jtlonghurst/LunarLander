@@ -6,8 +6,8 @@ inputHandler = function(){
 
     function keyPress(e){
         kh.keys[e.key] = e.timeStamp;
-        console.log('pressed');
-        console.log(e.key);
+        //console.log('pressed');
+        //console.log(e.key);
     };
 
     function keyRelease(e){
@@ -39,36 +39,40 @@ inputHandler = function(){
     }
     kh.registerThrust = function(e){
         registerCommand(e.key, thrust);
+
     }
 
-    kh.registerNewKey = function(handler){
-        kh.unregisterCommand(handler);
-        let chosen = false;
-        //kh.keys.length = 0; //clears the key that are currently there
-        let key = 0;  
-        //The idea with this is to wait until the user selects a key
-        window.addEventListener('keydown', function(e){chosen = true; kh.registerCommand(e)})
-        while(!chosen){
 
-           /* console.log('muhahaha')
-            //if(kh.keys.leng >0){
-            console.log(kh.keys);
-                *//*for (i in kh.keys){
-                    if(kh.keys.hasOwnProperty(i)){
-                        key = i; 
-                    chosen = true; 
-                    break
-                    }
-                }*/
-        }
+    //The following code comes from https://stackoverflow.com/questions/17176046/pause-function-until-enter-key-is-pressed-javascript
+    //This code returns a promise and waits until the key has been pressed then assigns that key to the proper handle
+    function awaitingKeyPress(handler, id, normalPhrase){
+        return new Promise((resolve) =>{
+            window.addEventListener('keydown', handle);
+            function handle(e){
+                
+                window.removeEventListener('keydown', handle);
+                kh.registerCommand(e.key, handler);
+                document.getElementById(id).innerHTML = normalPhrase + e.key;
+                resolve();
+
+            }
+        }) 
+    }
+
+    async function registerNewKey(handler, id, normalPhrase){
+        document.getElementById(id).innerHTML = normalPhrase + 'Please push a new key'
+        kh.unregisterCommand(handler);
+        //let chosen = false;
+        awaitingKeyPress(handler, id, normalPhrase);
+        console.log('all Done!')
+          
         
-        kh.registerCommand(key,handler);
     }
 
 
 
     function update(elapsedTime){
-        console.log("I'm still runnin! ")
+        //console.log("I'm still runnin! ")
         for (let key in kh.keys ){
             if (kh.keys.hasOwnProperty(key)){
                 if(kh.handlers[key]){
@@ -93,6 +97,7 @@ inputHandler = function(){
         update: update,
         kh: kh,
         initialize: initialize,
+        registerNewKey: registerNewKey,
     }
 
 }();
