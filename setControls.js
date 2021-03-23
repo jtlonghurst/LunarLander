@@ -8,6 +8,7 @@ d is rotate right
 */
 myGame.screens['setControls'] = function(){
     function initialize(){
+        document.getElementById('thrustButt').addEventListener('click', function(){inputHandler.kh.registerNewKey(spec.lander.thrust)});
         document.getElementById('setControlsBackButton').addEventListener('click', function(){menuer.showScreen('mainMenu');});
 
     }
