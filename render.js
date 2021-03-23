@@ -98,27 +98,35 @@ Draw = function(){
         
     }
     function drawAnnouncement(){
-        if(spec.lander.landed && spec.lander.crashed){
-            context.save();
-            context.fillStyle = spec.badEnd.fillStyle;
-            context.strokeStyle = spec.badEnd.strokeStyle;
-            context.font = spec.badEnd.font;
-            context.baseline = 'top'
-            context.fillText("Well at least it's on the moon now.", spec.badEnd.x, spec.badEnd.y);
+        if(spec.lander.landed){
+            if(spec.lander.crashed){
+                context.save();
+                context.fillStyle = spec.badEnd.fillStyle;
+                context.strokeStyle = spec.badEnd.strokeStyle;
+                context.font = spec.badEnd.font;
+                context.baseline = 'top'
+                context.fillText("Well at least it's on the moon now.", spec.badEnd.x, spec.badEnd.y);
+                context.restore();
+
+            }
+            else{
+                context.save();
+                context.fillStyle = spec.goodEnd.fillStyle;
+                context.strokeStyle = spec.goodEnd.strokeStyle;
+                context.font = spec.goodEnd.font;
+                context.baseline = 'top'
+                context.fillText("Mission Accomplished", spec.goodEnd.x, spec.goodEnd.y);
+                context.restore();
+            }
+            context.save()
+            context.fillSytle = spec.countDown.fillStyle;
+            context.strokeStyle = spec.countDown.strokeStyle;
+            context.font = spec.countDown.font;
+            context.baseline = 'top';
+            context.fillText('Next Level in: '+ Math.floor(spec.landscape.countDown), spec.countDown.x, spec.countDown.y);
             context.restore();
-
         }
-        else if(spec.lander.landed){
-            context.save();
-            context.fillStyle = spec.goodEnd.fillStyle;
-            context.strokeStyle = spec.goodEnd.strokeStyle;
-            context.font = spec.goodEnd.font;
-            context.baseline = 'top'
-            context.fillText("Mission Accomplished", spec.goodEnd.x, spec.goodEnd.y);
-            context.restore();
-
-
-        }
+        
     }
 
     function drawTexture(image, size, center, rotation){

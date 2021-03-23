@@ -26,6 +26,7 @@ myGame.screens['newGame']= function(){
         spec.thruster.update(elapsedTime);
         spec.kaboom.update(elapsedTime);
         updater.collisionDetection(spec.landscape.currentLevel);
+        updater.updateCountDown(elapsedTime);
 
     }
     function render(){

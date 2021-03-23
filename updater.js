@@ -105,22 +105,47 @@ updater = function (){
         }
         return false;
     }
+    function updateCountDown(elapsedTime){
+        if(spec.lander.landed){
+            spec.landscape.countDown -= (elapsedTime/1000);
+            if(spec.landscape.countDown <= 0){
+                toNextLevel(spec.landscape.nextLevel);
+            }
+        }
+    }
 
     function crashShip(){
         console.log('crash');
         spec.lander.crashed = true; 
         spec.lander.vector.x = 0;
         spec.lander.vector.y = 0;
-        spec.kaboom.makeParticles(200, [0, 2*Math.PI]);
+        spec.kaboom.makeParticles(400, [0, 2*Math.PI]);
+        spec.landscape.countDown = 4;
+        spec.landscape.nextLevel = 1; 
     }
-    function landShip(level){
+    function landShip(){
         console.log('level Complete!');
         spec.lander.vector.x = 0;
         spec.lander.vector.y = 0;
-        
+        //put the countdown here; 
+        spec.landscape.countDown = 4;
+        spec.landscape.nextLevel = 2; 
     }
-    //function toLevelTwo(){ 
-    //}
+    function toNextLevel(level){
+        spec.lander.landed = false;
+        spec.lander.crashed = false;
+        spec.lander.x = spec.lander.default.x;
+        spec.lander.y = spec.lander.default.y;
+        spec.lander.rotation = spec.lander.default.rotation;
+        spec.landscape.landLine = [];
+        spec.landscape.safeList = [];
+        if(level == 1){
+            creator.levelOne();
+        } 
+        if(level === 2){
+            creator.levelTwo();
+        }
+    }
 
 
     //This function is useful for adding two vectors together 
@@ -181,7 +206,8 @@ updater = function (){
     return {
         updateLander: updateLander,
         vectorAdder: vectorAdder,
-        collisionDetection: collisionDetection
+        collisionDetection: collisionDetection,
+        updateCountDown: updateCountDown,
         
     }
 }();

@@ -22,7 +22,9 @@ specs = function(){
         lv1PlatformNumber:2,
         lv2PlatformNumber:1,
         safeList : [], 
-        currentLevel:1
+        currentLevel:1,
+        countDown: 0,
+        nextLevel:1,
 
     }
     //the specs for the lander
@@ -45,6 +47,7 @@ specs = function(){
         landed : false,
         crashed: false, 
         thrusterWidth: Math.PI/8,
+        default: {x: 200, y: 200, rotation: Math.PI/2}
     }
 
     thruster = particleGen({
@@ -173,6 +176,13 @@ specs = function(){
         strokeStyle: 'white',
         fillStyle: 'white',
     }
+    countDown= {
+        font: 'bold 30pt arial',
+        x:150,
+        y:300, 
+        strokeStyle: 'white',
+        fillStyle: 'white'
+    }
     return{
         game,
         landscape,
@@ -187,7 +197,8 @@ specs = function(){
         thruster, 
         thrusterRender,
         kaboom,
-        kaboomRender
+        kaboomRender,
+        countDown
     }
 
 }

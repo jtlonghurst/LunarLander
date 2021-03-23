@@ -242,9 +242,13 @@ creator = function(){
     function levelOne(){
         makeLevel(4, 2, 150);
     }
+    function levelTwo(){
+        makeLevel(4, 1, 100);
+    }
     return{
         nextGaussian: nextGaussian, 
         spikyLine: spikyLine,
         levelOne: levelOne,
+        levelTwo: levelTwo,
     }
 }();
