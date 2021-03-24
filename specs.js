@@ -1,7 +1,15 @@
 specs = function(){
     game = {
         looping : false,
-        size : 1000
+        size : 1000,
+        timer: {time: 0,
+            font:'bold 15pt arial',
+            x:750,
+            y:80,
+            strokeStyle: 'white',
+            fillStyle: 'white', },
+        newHighscore: [],
+        highScores: [null, null, null, null,null ]
     }
     landscape = {
         height: 750,
@@ -47,9 +55,10 @@ specs = function(){
         landed : false,
         crashed: false, 
         thrusterWidth: Math.PI/8,
-        default: {x: 200, y: 200, rotation: Math.PI/2},
+        default: {x: 200, y: 200, rotation: Math.PI/2, fuel: 20},
         sounds: {},
         thruster : false,
+        fuel :20, 
     }
 
     thruster = particleGen({
@@ -67,11 +76,11 @@ specs = function(){
     landerInput = function() {
         function stopThrust(){
             let key = inputHandler.kh.findKey(thrust)
-            console.log(key);
+            //console.log(key);
             return new Promise((resolve)=>{
                 window.addEventListener('keyup', stopIt);
                 function stopIt(e){
-                    console.log(e.key);
+                   // console.log(e.key);
                     if(e.key === key){
                         lander.sounds['thrust'].pause();
                         lander.thruster = false; 
@@ -92,15 +101,18 @@ specs = function(){
             //The direction -pi/2 just makes it look like the thrust is coming out of the bottom of the lander. 
             //I think it is having a problem with negative numbers. 
             if(!lander.landed){
-                if(!lander.thruster){
-                    lander.sounds['thrust'].play();
-                    lander.thruster = true;
-                    stopThrust();
+                if(lander.fuel > 0){
+                    if(!lander.thruster){
+                        lander.sounds['thrust'].play();
+                        lander.thruster = true;
+                        stopThrust();
+                    }
+                    lander.vector = updater.vectorAdder(lander.vector, {magnitude: .0175 , direction: (lander.rotation- (Math.PI/2))});
+                    let min = (lander.rotation + (Math.PI/2))- lander.thrusterWidth;
+                    let max = (lander.rotation + (Math.PI/2))+ lander.thrusterWidth;
+                    thruster.makeParticles(5, [min, max]);
+                    lander.fuel -= .05;
                 }
-                lander.vector = updater.vectorAdder(lander.vector, {magnitude: .0175 , direction: (lander.rotation- (Math.PI/2))});
-                let min = (lander.rotation + (Math.PI/2))- lander.thrusterWidth;
-                let max = (lander.rotation + (Math.PI/2))+ lander.thrusterWidth;
-                thruster.makeParticles(5, [min, max]);
                 //lander.sounds['thrust'].pause();
             }
             /*console.log('vector');
@@ -187,6 +199,14 @@ specs = function(){
         fillStyle: 'white',
         text: 'Rotation :' +(lander.rotation*180)/Math.PI 
     }
+    ful = {
+        font:'bold 15pt arial',
+        x:750,
+        y:100,
+        strokeStyle: 'white',
+        fillStyle: 'white',
+        text: 'Rotation :' +(lander.rotation*180)/Math.PI 
+    }
     goodEnd = {
         font:'bold 30pt arial',
         x:300,
@@ -209,6 +229,39 @@ specs = function(){
         strokeStyle: 'white',
         fillStyle: 'white'
     }
+
+    highScores = function(){
+        let highS = {1:null, 2:null, 3:null, 4:null, 5:null }
+        let previousScores = localStorage.getItem('lunarLander.highScores');
+        console.log(highS);
+
+        if (previousScores !== null&& previousScores !== undefined) {
+            console.log('I am sinning!')
+            highS = JSON.parse(previousScores);
+        }
+
+        function add(newHighScore){
+            let temp; 
+            for (i in highS){
+                if(highS[i] === null|| newHighScore < highS[i]){
+                    temp = highS[i];
+                    highS[i] = newHighScore;
+                    newHighScore = temp;
+                    if(newHighScore === null){
+                        break;
+                    }
+                }
+
+            }
+            localStorage['lunarLander.highScores'] = JSON.stringify(highS);
+        }
+
+        return {
+            add: add,
+            highS: highS,
+        }
+    }();
+
     return{
         game,
         landscape,
@@ -224,7 +277,9 @@ specs = function(){
         thrusterRender,
         kaboom,
         kaboomRender,
-        countDown
+        countDown,
+        highScores,
+        ful
     }
 
 }

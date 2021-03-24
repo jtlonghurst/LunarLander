@@ -131,11 +131,14 @@ updater = function (){
         spec.lander.vector.y = 0;
         //put the countdown here; 
         spec.landscape.countDown = 4;
-        spec.landscape.nextLevel = 2; 
+        spec.landscape.nextLevel = 2;
+        spec.highScores.add(Math.floor(spec.game.timer.time/1000)); 
     }
     function toNextLevel(level){
+        spec.game.timer.time = 0;
         spec.lander.landed = false;
         spec.lander.crashed = false;
+        spec.lander.fuel = spec.lander.default.fuel; 
         spec.lander.x = spec.lander.default.x;
         spec.lander.y = spec.lander.default.y;
         spec.lander.rotation = spec.lander.default.rotation;
@@ -153,56 +156,62 @@ updater = function (){
     //This function is useful for adding two vectors together 
     //It is useful for adding force vectors to the lander. 
     function vectorAdder(landerVector, vector2){
-       /* console.log('vectors 1')
-        console.log(vector1);
-        console.log(vector2);*/
-        //vector1.direction = vector1.direction%(2*Math.PI);
-        //vector2.direction = vector2.direction%(2*Math.PI);
+       
 
 //Converts to cartesian
-        
-        /*console.log('vectors 2');
-        console.log(x1);
-        console.log(y1);
-        console.log(vector2);*/
 
         let y2 = vector2.magnitude * Math.sin(vector2.direction);
         let x2 = vector2.magnitude * Math.cos(vector2.direction);
 
-       /* console.log('vectors 3');
-        console.log(x1);
-        console.log(y1);
-        console.log(x2);
-        console.log(y2);*/
 
 //Adds vectors together
         let newX = landerVector.x + x2 
         let newY = landerVector.y + y2
 
-        /*console.log('vectors 4');
-        console.log(newX);
-        console.log(newY);*/
-        
-//converts back to polar         
-       /* let magnitude = (Math.sqrt((newX**2)+ (newY**2)));
-        if(newX ===0){
-            newX = .00000000001//This keeps the lander from popping out of existance if newX == 0
-        }
-        let direction = Math.atan(newY/newX);
-
-        if (magnitude < 0){
-            magnitude = Math.abs(magnitude);
-            direction = -direction;
-        }*/ 
-        /*
-        console.log('vectors 5');
-        console.log (magnitude);
-        console.log(direction);
-        */
         return{
             x:newX,
             y:newY
         }
+    }
+    function updateTimer(elapsedTime){
+        if(!spec.lander.landed){
+            spec.game.timer.time += elapsedTime;
+        }
+        let deg = Math.abs(Math.floor((spec.lander.rotation * 180)/Math.PI));
+        if( deg >355||deg < 5 ){
+            spec.rot.fillStyle = 'green';
+            spec.rot.strokeStyle = 'green';
+        }
+        else{
+            spec.rot.fillStyle = 'white';
+            spec.rot.strokeStyle = 'white';
+
+        }
+        if(Math.abs(spec.lander.vector.y) < 2){
+            spec.yVel.fillStyle = 'green';
+            spec.yVel.strokeStyle = 'green';
+        }
+        else{
+            spec.yVel.fillStyle = 'white';
+            spec.yVel.strokeStyle = 'white';
+        }
+        if(Math.abs(spec.lander.vector.x) < 2){
+            spec.xVel.fillStyle = 'green';
+            spec.xVel.strokeStyle = 'green';
+        }
+        else{
+            spec.xVel.fillStyle = 'white';
+            spec.xVel.strokeStyle = 'white';
+        }
+        if(spec.lander.fuel > 0){
+            spec.ful.fillStyle = 'green';
+            spec.ful.strokeStyle = 'green';
+        }
+        else{
+            spec.ful.fillStyle = 'white';
+            spec.ful.strokeStyle = 'white';
+        }
+
     }
 
     return {
@@ -210,6 +219,7 @@ updater = function (){
         vectorAdder: vectorAdder,
         collisionDetection: collisionDetection,
         updateCountDown: updateCountDown,
+        updateTimer: updateTimer,
         
     }
 }();

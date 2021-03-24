@@ -95,6 +95,23 @@ Draw = function(){
         context.fillText('Rotation: '+ Math.floor(Math.abs(((spec.lander.rotation % (2* Math.PI)) * 180)/Math.PI)), spec.rot.x, spec.rot.y);
         context.restore();
 
+        context.save();
+        context.fillStyle = spec.game.timer.fillStyle;
+        context.strokeStyle = spec.game.timer.strokeStyle;
+        context.font = spec.game.timer.font;
+        context.baseline = 'top'
+        context.fillText('Timer: '+ Math.floor(spec.game.timer.time/1000), spec.game.timer.x, spec.game.timer.y);
+        context.restore();
+
+        context.save();
+        context.fillStyle = spec.ful.fillStyle;
+        context.strokeStyle = spec.ful.strokeStyle;
+        context.font = spec.ful.font;
+        context.baseline = 'top'
+        context.fillText('Fuel: '+ spec.lander.fuel, spec.ful.x, spec.ful.y);
+        context.restore();
+
+
         
     }
     function drawAnnouncement(){
