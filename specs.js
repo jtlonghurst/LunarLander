@@ -11,6 +11,7 @@ specs = function(){
         newHighscore: [],
         highScores: [null, null, null, null,null ]
     }
+    //This has all the details for the actual landscape of the moon. 
     landscape = {
         height: 750,
         landingBorder: 15, //specifies how far from the edge the landing zone has to be. 
@@ -73,14 +74,16 @@ specs = function(){
     
 
     //The input handlers for the lander 
+
+    //This is a promise function that will stop the thrust noise when the user releases thrust
     landerInput = function() {
         function stopThrust(){
             let key = inputHandler.kh.findKey(thrust)
-            //console.log(key);
+           
             return new Promise((resolve)=>{
                 window.addEventListener('keyup', stopIt);
                 function stopIt(e){
-                   // console.log(e.key);
+                   
                     if(e.key === key){
                         lander.sounds['thrust'].pause();
                         lander.thruster = false; 
@@ -92,14 +95,9 @@ specs = function(){
             })
         }
 
+        //This is the go juice 
         async function thrust(elapsedTime){
-           /* console.log('lander vector before')
-            console.log(lander.vector);
-            console.log('other before vector');
-            console.log({magnitude: .02, direction: (lander.rotation - (Math.PI/2))});*/
-            //.02 is a good acceleration rate
-            //The direction -pi/2 just makes it look like the thrust is coming out of the bottom of the lander. 
-            //I think it is having a problem with negative numbers. 
+           
             if(!lander.landed){
                 if(lander.fuel > 0){
                     if(!lander.thruster){
@@ -113,14 +111,9 @@ specs = function(){
                     thruster.makeParticles(5, [min, max]);
                     lander.fuel -= .05;
                 }
-                //lander.sounds['thrust'].pause();
+                
             }
-            /*console.log('vector');
-            console.log(lander.vector)*/
-           // console.log('boom')
-           //The problem I've found is that when you go in the opposite the direction of the one you are going, 
-           //the lander will get stuck jumping back and forth between negative and positive values, just stuck, and I don't know why.
-           //This happens whether or not the modifier is applied
+           
         }
         function rotateRight(elapsedTime){
             if(!lander.landed){
@@ -144,6 +137,8 @@ specs = function(){
         }
     }();
 
+    //kaboom is when the ship explodes
+    //I'm not completely sure why the thrust is fire 
     kaboom = particleGen({
         size: {mean: 10, stdev: 1},
         lifetime: {mean: 3, stdev: 1},
@@ -230,6 +225,7 @@ specs = function(){
         fillStyle: 'white'
     }
 
+    //This is the function that handles persisting to the browser. 
     highScores = function(){
         let highS = {1:null, 2:null, 3:null, 4:null, 5:null }
         let previousScores = localStorage.getItem('lunarLander.highScores');
@@ -240,6 +236,7 @@ specs = function(){
             highS = JSON.parse(previousScores);
         }
 
+        //puts a new high score in and sorts it
         function add(newHighScore){
             let temp; 
             for (i in highS){

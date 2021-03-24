@@ -12,13 +12,6 @@ updater = function (){
         //let vectorY = spec.lander.vector.magnitude * Math.sin(lander.vector.direction);
         spec.lander.x += spec.lander.vector.x;
         spec.lander.y += spec.lander.vector.y; 
-       /* console.log('x and y')
-        console.log(spec.lander.x)
-        console.log(spec.lander.y)
-        console.log('magnitude');
-        console.log(spec.lander.magnitude);
-        console.log('direction')
-        console.log(spec.lander.direction);*/
         spec.lander.cornerX = spec.lander.x - ((1/2)* spec.lander.width);
         spec.lander.cornerY = spec.lander.y - ((1/2)* spec.lander.height);
         spec.lander.circle.center.x = spec.lander.x;
@@ -61,12 +54,10 @@ updater = function (){
                 }   
         } 
 
-        //console.log(spec.landscape.landLine);
+        
         //if those conditions aren't met, then we just see if it collides with anything and print game over if it does. 
         for (let i=0; i < spec.landscape.landLine.length -1; i ++){
-           // console.log('HELLLLOOOOOOOOOO')
             let check = lineCircleIntersection(spec.landscape.landLine[i], spec.landscape.landLine[i+1], spec.lander.circle);
-           // console.log(check);
             if (check&& !spec.lander.landed){
                 
                 crashShip();
@@ -78,12 +69,7 @@ updater = function (){
     //code posted in the lecture 
     // Reference: https://stackoverflow.com/questions/37224912/circle-line-segment-collision
     function lineCircleIntersection(pt1, pt2, circle) {
-       /* console.log('pt1');
-        console.log(pt1);
-        console.log('pt2');
-        console.log(pt2);
-        console.log('circle');
-        console.log(circle);*/
+       
         let v1 = { x: pt2[0] - pt1[0], y: pt2[1] - pt1[1] };
         let v2 = { x: pt1[0] - circle.center.x, y: pt1[1] - circle.center.y };
         let b = -2 * (v1.x * v2.x + v1.y * v2.y);
@@ -114,6 +100,7 @@ updater = function (){
         }
     }
 
+    //failure :(
     function crashShip(){
         console.log('crash');
         spec.lander.sounds['boom'].play();
@@ -124,6 +111,7 @@ updater = function (){
         spec.landscape.countDown = 4;
         spec.landscape.nextLevel = 1; 
     }
+    // if you successfully land the ship 
     function landShip(){
         console.log('level Complete!');
         spec.lander.sounds['yay'].play();
@@ -134,6 +122,7 @@ updater = function (){
         spec.landscape.nextLevel = 2;
         spec.highScores.add(Math.floor(spec.game.timer.time/1000)); 
     }
+    //Self explanatory resets everything and sends you to the next level
     function toNextLevel(level){
         spec.game.timer.time = 0;
         spec.lander.landed = false;
@@ -173,6 +162,7 @@ updater = function (){
             y:newY
         }
     }
+    //This updates the timer and makes everything green that needs to be
     function updateTimer(elapsedTime){
         if(!spec.lander.landed){
             spec.game.timer.time += elapsedTime;

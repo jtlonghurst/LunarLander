@@ -70,8 +70,6 @@ creator = function(){
         if(y < spec.landscape.minHeight){
             y = spec.landscape.minHeight;
         }
-
-        //console.log(x);
         //If you are at the right amount of spikiness return 
         if(depth == goalDepth){
             return [[x,y]] 
@@ -167,20 +165,10 @@ creator = function(){
                                 //checking to make sure the area selected is big enough 
                                 if((location - current) > lengthSafeSpots){
                                     selection = Math.floor(Math.random() * ((location-lengthSafeSpots) - current))+ current; 
-                                    //spec.landscape.safeList = spec.landscape.safeList.concat([[selection,y]]);
                                     insertionSort([selection, y], spec.landscape.safeList, 0);
                                 }
                                 else{
-                                   /* console.log('doAgain is true');
-                                    console.log(selection);
-                                    console.log('location - current');
-                                    console.log(location - current);
-                                    console.log('size');
-                                    console.log(size);
-                                    console.log('location');
-                                    console.log(location);
-                                    console.log('current');
-                                    console.log(current);*/
+                                   
                                     doAgain = true; 
                                 }
                                 break; 
@@ -189,23 +177,14 @@ creator = function(){
                             else{
                                 current = spec.landscape.safeList[i][0] + lengthSafeSpots;
                                 if(isNaN(current)){
-                                   /* console.log('nan check');
-                                    console.log('size');
-                                    console.log(size);
-                                    console.log('safe list');
-                                    console.log(spec.landscape.safeList[i][0]);
-                                    console.log('length safe spots');
-                                    console.log(lengthSafeSpots);*/
+                                   
                                     console.log('ERROR CURRENT IS NAN!!!!!!!!!!!!!!!!!!!!!!!')
                                 }
                             }
                         }
                 }while(doAgain);
             }
-            //spec.landscape.safeList = spec.landscape.safeList.concat([[selection, y]]); 
         }
-        //console.log('safeZones: ');
-        //console.log(spec.landscape.safeList);
     }
 
     function makeLevel(spikiness, numSafeSpots, lengthSafeSpots){
@@ -216,21 +195,15 @@ creator = function(){
         //making new safe spots 
         selectSafeZones(numSafeSpots, lengthSafeSpots);
         for(let i =0; i < spec.landscape.safeList.length; i++){
-            //console.log('current');
-            //console.log(current);
+          
             //Jagged line to safe spot
             let jagged = spikyLine(current, spec.landscape.safeList[i],spikiness); 
             spec.landscape.landLine = spec.landscape.landLine.concat(jagged);//spikyLine(current, spec.landscape.safeList[i][0],spikiness));
-           // console.log('jagged ' + i);
-            //console.log(jagged)
-
+           
             //Making the safe spot
             spec.landscape.landLine = spec.landscape.landLine.concat([spec.landscape.safeList[i]]);
-           // console.log('safe Spot '+ i);
-            //console.log(spec.landscape.safeList[i])
             spec.landscape.landLine = spec.landscape.landLine.concat([[spec.landscape.safeList[i][0]+ lengthSafeSpots, spec.landscape.safeList[i][1]]]);
-            //console.log('end Safe Spot '+ i);
-            //console.log([spec.landscape.safeList[i][0] + lengthSafeSpots, spec.landscape.safeList[i][1]]);
+           
 
             //setting up for the next round 
             current = [spec.landscape.safeList[i][0]+lengthSafeSpots,spec.landscape.safeList[i][1]];
@@ -246,6 +219,7 @@ creator = function(){
         makeLevel(4, 1, 100);
     }
 
+    //for all the sounds 
     function loadSound(src, name){
         let sound = new Audio();
         sound.src = src

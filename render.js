@@ -15,14 +15,9 @@ Draw = function(){
     function drawLine(path){
         context.beginPath();
         context.moveTo(spec.landscape.startPathX, spec.landscape.height);
-        //console.log('moveTo location: ')
-        //console.log(spec.landscape.beginPathX)
-        //console.log(spec.landscape.height)
         for (let dot = 0; dot < path.length; dot++){
             context.lineTo(path[dot][0],path[dot][1]);
         }
-        //console.log('I  am running in drawLine')
-        //context.lineTo(500,500);
         context.lineTo(spec.landscape.endPathX, spec.landscape.height);
         //Closing the shape so that I can get a good fill 
         context.lineTo(spec.landscape.endPathX, spec.landscape.endPathX);
@@ -146,8 +141,8 @@ Draw = function(){
         
     }
 
+    //This goes with the particle system
     function drawTexture(image, size, center, rotation){
-       // console.log('i am drawing')
         context.save(); 
         context.translate(center.x, center.y);
         context.rotate(rotation);
@@ -175,6 +170,7 @@ Draw = function(){
     }
 }();
 
+//This is for the particle systems it allows me to render them more easily 
 ParticleSystemRenderer = function(system, imageSrc){
 
     let image = new Image();
@@ -182,7 +178,6 @@ ParticleSystemRenderer = function(system, imageSrc){
     
     image.onload = function(){
         isReady = true;
-        //console.log('ready')
     }
 
     image.src = imageSrc; 
@@ -190,10 +185,7 @@ ParticleSystemRenderer = function(system, imageSrc){
     function render(){
         if(isReady){
             particle = system.getParticles
-            //console.log('particle length');
-            //console.log(particle.length);
             for (let i = 0; i < particle.length; i++){
-                //console.log('I should be drawing things.')
                 Draw.drawTexture(image, particle[i].size, particle[i].center, particle[i].rotation);
             }
         }
