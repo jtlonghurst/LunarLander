@@ -69,8 +69,9 @@ updater = function (){
     //code posted in the lecture 
     // Reference: https://stackoverflow.com/questions/37224912/circle-line-segment-collision
     function lineCircleIntersection(pt1, pt2, circle) {
-       
+       //finding the line
         let v1 = { x: pt2[0] - pt1[0], y: pt2[1] - pt1[1] };
+        //finding a line to the circle
         let v2 = { x: pt1[0] - circle.center.x, y: pt1[1] - circle.center.y };
         let b = -2 * (v1.x * v2.x + v1.y * v2.y);
         let c =  2 * (v1.x * v1.x + v1.y * v1.y);

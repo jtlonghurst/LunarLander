@@ -37,7 +37,9 @@
 #gameplayCanvas{
     height: 100%;
     width: 100%;
+    /*width: 750px;*/
     background: white; 
+   /* padding-top: 75%;*/ 
 }
 .mainTitle{
     color: white;
@@ -48,4 +50,8 @@
 #buttonList{
     margin: auto;
     align-items: center;
+}
+#newGame{
+    padding: 0% 0; 
+    background: black;
 }
